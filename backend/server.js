@@ -12,7 +12,7 @@ const PORT = process.env.PORT || 5000;
 // மிடில்வேர் (Middleware)
 // CORS: உங்கள் ஃபிரண்ட்எண்ட் சர்வர் வேறு டொமைனில் இருந்தால், அதை இங்கு குறிப்பிடலாம்.
 // உதாரணத்திற்கு: origin: 'http://localhost:3000' (உங்கள் ஃபிரண்ட்எண்ட் இயங்கும் இடம்)
-app.use(cors());
+app.use(cors('https://ast-web.github.io'));
 app.use(express.json());
 
 // Razorpay Instance ஐ துவக்குதல்
@@ -91,5 +91,5 @@ app.post('/api/payment-verify', async (req, res) => {
 // சர்வர் துவங்குதல்
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
-    console.log(`Access backend at http://localhost:${PORT}`);
+    console.log(`Access backend at https://aramseithozha.onrender.com`);
 });
