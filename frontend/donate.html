@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aram Sei Thozha Trust</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="AST Logo.png" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Nunito:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <style>
+        /* Basic styling for payment method icons */
+        .payment-methods-icons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+            margin-bottom: 30px;
+        }
+        .payment-methods-icons img {
+            height: 40px; /* Adjust size as needed */
+            width: auto;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.2s ease-in-out;
+            cursor: pointer; /* Indicate clickable */
+            border: 2px solid transparent; /* For selected state */
+        }
+        .payment-methods-icons img:hover {
+            transform: translateY(-3px);
+        }
+        .payment-methods-icons img.selected {
+            border: 2px solid #007bff; /* Highlight selected icon */
+            box-shadow: 0 4px 10px rgba(0,123,255,0.3);
+        }
+
+        .payment-gateway-info {
+            background-color: #f8f8f8;
+            border: 1px dashed #ccc;
+            padding: 20px;
+            margin-top: 30px;
+            border-radius: 8px;
+            text-align: left;
+        }
+        .donation-form-wrapper {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            max-width: 700px;
+            margin: 30px auto;
+            text-align: left;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+        .form-group input[type="number"],
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            box-sizing: border-box; /* Include padding and border in the element's total width and height */
+        }
+        .suggested-amounts {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .suggested-amounts .amount-btn {
+            flex: 1 1 auto; /* Allow buttons to grow and shrink */
+            padding: 10px 15px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            border: 1px solid #007bff;
+            background-color: #fff;
+            color: #007bff;
+            transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+        }
+        .suggested-amounts .amount-btn:hover,
+        .suggested-amounts .amount-btn.active {
+            background-color: #007bff;
+            color: #fff;
+            border-color: #007bff;
+        }
+        .impact-text {
+            font-size: 0.9em;
+            color: #555;
+            margin-top: 5px;
+        }
+        .btn-cta {
+            width: 100%;
+            padding: 15px 20px;
+            font-size: 18px;
+            font-weight: 700;
+            margin-top: 30px;
+        }
+        .donate-options {
+            display: grid;
+            grid-template-columns: 1fr; /* Single column on small screens */
+            gap: 30px;
+            margin-top: 30px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .donate-card {
+            background-color: #f9f9f9;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        .donate-card:hover {
+            transform: translateY(-5px);
+        }
+        .donate-card h3 {
+            color: #007bff;
+            margin-bottom: 15px;
+        }
+        .donate-card p {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        .section-padded ul {
+            list-style: none;
+            padding: 0;
+            margin-top: 20px;
+            text-align: left; /* Align impact points to the left */
+        }
+        .section-padded ul li {
+            margin-bottom: 10px;
+            color: #444;
+            display: flex;
+            align-items: center;
+        }
+        .section-padded ul li i.icon-check {
+            color: #28a745; /* Green checkmark */
+            margin-right: 10px;
+            font-size: 1.2em; /* Adjust size as needed */
+            /* You'll need to define .icon-check in your style.css or use a font-awesome icon */
+        }
+        /* Media query for larger screens - This is where the side-by-side layout happens */
+        @media (min-width: 768px) {
+            .donate-options {
+                grid-template-columns: 1fr 1fr; /* Two columns on larger screens */
+            }
+            .half-width-group { /* This class is not directly used in this HTML but good for general CSS */
+                display: flex;
+                gap: 20px;
+            }
+            .half-width { /* This class is not directly used in this HTML but good for general CSS */
+                flex: 1;
+            }
+        }
+        /* New section for payment method choice */
+        #payment-method-choice-section {
+            display: none; /* Initially hidden */
+            margin-top: 40px;
+            text-align: center;
+        }
+        #payment-method-choice-section h3 {
+            margin-bottom: 25px;
+            color: #333;
+        }
+        #final-proceed-button {
+            margin-top: 30px;
+        }
+
+        /* Redesign How Donation Helps */
+        .how-donation-helps {
+            margin-top: 60px;
+            padding: 40px 20px;
+            background-color: #eaf6ff; /* Light blue background */
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+        .how-donation-helps h2 {
+            margin-bottom: 30px;
+            color: #0056b3;
+        }
+        .impact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+        .impact-item {
+            background-color: #fff;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            text-align: left;
+            transition: transform 0.2s ease;
+        }
+        .impact-item:hover {
+            transform: translateY(-5px);
+        }
+        .impact-item strong {
+            display: block;
+            font-size: 1.5em;
+            color: #007bff;
+            margin-bottom: 10px;
+        }
+        .impact-item p {
+            font-size: 1em;
+            color: #555;
+            line-height: 1.5;
+        }
+
+        /* Message Box Styling */
+        #message-box {
+            display: none; /* Hidden by default */
+            padding: 15px;
+            margin: 20px auto;
+            max-width: 600px;
+            border-radius: 8px;
+            font-weight: bold;
+            text-align: center;
+            border: 1px solid;
+            transition: all 0.3s ease-in-out;
+        }
+        #message-box.success {
+            background-color: #d4edda;
+            color: #155724;
+            border-color: #c3e6cb;
+        }
+        #message-box.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border-color: #f5c6cb;
+        }
+        #message-box.info {
+            background-color: #cfe2ff;
+            color: #055160;
+            border-color: #b6d4fe;
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container header-content">
+            <div class="logo">
+                <a href="index.html"><img src="images/AST.png" alt="AST Logo"></a>
+            </div>
+
+            <nav class="main-nav">
+                <button class="hamburger-menu" aria-label="Toggle navigation">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="education-campaigns.html">Education Campaigns</a></li>
+                    <li class="dropdown-nav">
+                        <a href="#">Projects <span class="dropdown-arrow">▼</span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="projects/welfare-activity.html">Welfare Activity</a></li>
+                            <li><a href="projects/tuition-centers.html">Tuition Centers</a></li>
+                            <li><a href="projects/medical-campaigns.html">Medical Campaigns</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="village-empowerment.html">Village Empowerment</a></li>
+                    <li class="dropdown-nav">
+                        <a href="#">More <span class="dropdown-arrow">▼</span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="about.html">About</a></li>
+                            <li><a href="contact.html">Contact</a></li>
+                            <li><a href="volunteer.html">Volunteer</a></li>
+                            <li><a href="success-stories.html">Success Stories</a></li>
+                        </ul>
+                    </li>
+                    <li><a class="btn btn-donate-nav" href="donate.html">Donate Now</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="section-padded">
+            <div class="container text-center">
+                <h1 class="section-title">Your Support Transforms Lives!</h1>
+                <p class="lead-text">Choose how you'd like to make an impact. Every contribution empowers our mission.</p>
+
+                <div class="donate-options" id="donation-type-selection">
+                    <div class="donate-card">
+                        <h3>One-Time Donation</h3>
+                        <p>Make a single gift to support our immediate needs and ongoing projects.</p>
+                        <button class="btn btn-primary-hero donate-option-btn" data-donation-type="one-time">Give One-Time</button>
+                    </div>
+                    <div class="donate-card">
+                        <h3>Monthly Giving</h3>
+                        <p>Become a regular supporter and provide stable funding for long-term change.</p>
+                        <button class="btn btn-primary-hero donate-option-btn" data-donation-type="monthly">Become a Monthly Donor</button>
+                    </div>
+                </div>
+
+                <div id="donation-details-section" class="donation-form-wrapper" style="display: none;">
+                    <h2 class="section-title text-center">Your Donation Details</h2>
+                    <form id="donation-form">
+                        <div class="form-group">
+                            <label for="amount">Donation Amount:</label>
+                            <input type="number" id="amount" name="amount" min="1" value="100" required>
+                            <div class="suggested-amounts">
+                                <button type="button" class="btn btn-secondary-outline amount-btn active" data-amount="100" data-impact="can provide school supplies for note books.">100</button>
+                                <button type="button" class="btn btn-secondary-outline amount-btn" data-amount="200" data-impact="can contribute to a medical check-up.">200</button>
+                                <button type="button" class="btn btn-secondary-outline amount-btn" data-amount="500" data-impact="can support clean water infrastructure for a small village.">500</button>
+                                <button type="button" class="btn btn-secondary-outline amount-btn" data-amount="1000" data-impact="can fund a month of operations for a tuition center.">1000</button>
+                            </div>
+                            <p id="impact-message" class="impact-text"></p>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="name">Your Name:</label>
+                            <input type="text" id="name" name="name" placeholder="John Doe" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Your Email:</label>
+                            <input type="email" id="email" name="email" placeholder="john.doe@example.com" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="comment">Comment (Optional):</label>
+                            <textarea id="comment" name="comment" rows="3" placeholder="I'd like to support..."></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-cta">Confirm Details & Choose Payment</button>
+                    </form>
+                </div>
+
+                <div id="payment-method-choice-section" class="donation-form-wrapper" style="display: none;">
+                    <h2 class="section-title">Choose Your Secure Payment Method</h2>
+                    <p class="lead-text">Total Donation: <strong id="display-final-amount">0.00</strong></p>
+                    <p>Select your preferred method below. You will be redirected to our secure payment partner.</p>
+
+                    <div class="payment-methods-icons">
+                        <img src="images/Card.png" alt="Cards (Visa, Mastercard, RuPay)" title="Cards (Visa, Mastercard, RuPay)" data-method="card">
+                        <img src="images/GPAY.png" alt="Google Pay" title="Google Pay" data-method="upi">
+                        <img src="images/PhonePe.png" alt="PhonePe" title="PhonePe" data-method="upi">
+                        <img src="images/SBI.png" alt="SBI Net Banking" title="SBI Net Banking" data-method="netbanking">
+                        <img src="images/HDFC.png" alt="HDFC Net Banking" title="HDFC Net Banking" data-method="netbanking">
+                        <img src="images/ICICI.jpeg" alt="ICICI Net Banking" title="ICICI Net Banking" data-method="netbanking">
+                    </div>
+
+                    <div class="payment-gateway-info">
+                        <p><strong>Your financial security is our top priority.</strong></p>
+                        <p>Upon clicking "Proceed to Payment", your transaction will be securely processed by our trusted payment gateway (e.g., Razorpay, PayU, Stripe). Your sensitive information is never stored on our servers.</p>
+                        <p class="small-text"><i>We partner with leading PCI-compliant providers to ensure your data is always protected.</i></p>
+                    </div>
+
+                    <button type="button" class="btn btn-cta" id="final-proceed-button" disabled>Proceed to Payment</button>
+                    <button type="button" class="btn btn-secondary mt-3" id="back-to-details">Back to Details</button>
+                </div>
+
+                <div id="message-box" class="info"></div>
+
+                <div class="how-donation-helps">
+                    <h2 class="section-title">See Your Impact: How Your Donation Helps!</h2>
+                    <p class="lead-text">Every contribution, big or small, creates a ripple effect of positive change.</p>
+
+                    <div class="impact-grid">
+                        <div class="impact-item">
+                            <strong>Empower Education</strong>
+                            <p>Your support provides **school supplies, digital learning tools, and dedicated tutors** to children, unlocking their potential.</p>
+                        </div>
+                        <div class="impact-item">
+                            <strong>Boost Health & Well-being</strong>
+                            <p>Your gift enables **free medical camps, essential medicines, and health awareness programs** for underserved communities.</p>
+                        </div>
+                        <div class="impact-item">
+                            <strong>Foster Community Growth</strong>
+                            <p>Contribute to **clean water projects, sanitation drives, and vocational training initiatives** that build self-reliant villages.</p>
+                        </div>
+                        <div class="impact-item">
+                            <strong>Support Livelihoods</strong>
+                            <p>Help us sustain **skill development programs and micro-enterprise support** that empower individuals for economic independence.</p>
+                        </div>
+                    </div>
+                    <p class="mt-4">Thank you for being a part of Aram Sei Thozha's mission to build a brighter, more equitable future!</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+     <footer class="site-footer-modern">
+        <div class="container footer-grid">
+            <div class="footer-col about-col">
+                <h3>Aram Sei Thozha Trust</h3>
+                 <a href="index.html"><img src="images/AST.png" alt="AST Logo"></a>
+            </div>
+            <div class="footer-col">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="donate.html">Donate</a></li>
+                    <li><a href="education-campaigns.html">Programs</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Get in Touch</h3>
+                <p><i class="icon-email"></i> Email: <a href="mailto:aramseithozha28@gmail.com">aramseithozha28@gmail.com</a></p>
+                <p><i class="icon-phone"></i> Phone: <a href="tel:+918760329821">+91 8760329821</a></p>
+            </div>
+            <div class="footer-col social-col">
+                <h3>Connect With Us</h3>
+                <div class="social-icons">
+                    <a href="https://www.facebook.com/aramseithozhatrust" target="_blank" aria-label="Facebook"><img src="images/fb.png" alt="Facebook"></a>
+                    <a href="#" target="_blank" aria-label="Twitter"><img src="images/x.png" alt="Twitter"></a>
+                    <a href="https://www.instagram.com/aramseithozhatrust" target="_blank" aria-label="Instagram"><img src="images/insta.jpeg" alt="Instagram"></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom-bar">
+            <div class="container">
+                <p>&copy; 2025 All Rights Reserved | Aram Sei Thozha Trust | Terms of Use | Privacy Policy</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+    <script>
+        // Function to display messages to the user (replaces alert())
+        function showMessage(message, type = 'info') {
+            const msgBox = document.getElementById('message-box');
+            msgBox.textContent = message;
+            msgBox.className = ''; // Clear existing classes
+            msgBox.classList.add(type); // Add new type class (success, error, info)
+            msgBox.style.display = 'block';
+            // Hide after 5 seconds
+            setTimeout(() => {
+                msgBox.style.display = 'none';
+            }, 5000);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const donationTypeSelection = document.getElementById('donation-type-selection');
+            const donationDetailsSection = document.getElementById('donation-details-section');
+            const paymentMethodChoiceSection = document.getElementById('payment-method-choice-section');
+            const donationForm = document.getElementById('donation-form');
+            const amountInput = document.getElementById('amount');
+            const amountBtns = document.querySelectorAll('.amount-btn');
+            const impactMessage = document.getElementById('impact-message');
+            const displayFinalAmount = document.getElementById('display-final-amount');
+            const paymentMethodIcons = document.querySelectorAll('.payment-methods-icons img');
+            const finalProceedButton = document.getElementById('final-proceed-button');
+            const backToDetailsButton = document.getElementById('back-to-details');
+
+            let currentDonationAmount = 100; // Default amount
+            let selectedPaymentMethod = null; // Store selected method (conceptually)
+            let razorpayKeyId = ''; // To store Razorpay Key ID from backend
+
+            // Function to update the impact message
+            function updateDonationDetails() {
+                const selectedAmount = parseFloat(amountInput.value);
+                const activeAmountBtn = document.querySelector('.amount-btn.active');
+
+                if (activeAmountBtn && activeAmountBtn.dataset.impact) {
+                    impactMessage.textContent = `Your ₹${selectedAmount} donation ${activeAmountBtn.dataset.impact}`;
+                } else if (selectedAmount > 0) {
+                    impactMessage.textContent = `Your ₹${selectedAmount} donation will make a significant impact!`;
+                } else {
+                    impactMessage.textContent = '';
+                }
+                currentDonationAmount = selectedAmount; // Update current amount
+            }
+
+            // Initial call to set impact message for default amount
+            updateDonationDetails();
+
+            // Handle donation type selection (One-Time/Monthly)
+            document.querySelectorAll('.donate-option-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    donationTypeSelection.style.display = 'none'; // Hide initial choice
+                    donationDetailsSection.style.display = 'block'; // Show donation details form
+                    amountInput.focus(); // Focus on the amount input for better UX
+                });
+            });
+
+            // Handle suggested amount buttons
+            amountBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    // Remove 'active' class from all buttons
+                    amountBtns.forEach(b => b.classList.remove('active'));
+                    // Add 'active' class to the clicked button
+                    btn.classList.add('active');
+                    amountInput.value = btn.dataset.amount;
+                    updateDonationDetails(); // Update impact when amount changes
+                });
+            });
+
+            // Update impact message when custom amount is typed
+            amountInput.addEventListener('input', () => {
+                amountBtns.forEach(b => b.classList.remove('active')); // Deactivate preset buttons if typing
+                updateDonationDetails();
+            });
+
+            // Step 1 Form Submission (Confirm Details & Choose Payment)
+            donationForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+
+                // Basic form validation (ensure fields are filled)
+                if (!donationForm.checkValidity()) {
+                    donationForm.reportValidity();
+                    showMessage('Please fill in all required fields.', 'error');
+                    return;
+                }
+
+                currentDonationAmount = parseFloat(amountInput.value);
+                if (currentDonationAmount <= 0) {
+                    showMessage('Donation amount must be a positive number.', 'error');
+                    return;
+                }
+
+                // Update the display amount in Step 2
+                displayFinalAmount.textContent = `₹${currentDonationAmount.toFixed(2)}`;
+
+                // Hide Step 1, show Step 2
+                donationDetailsSection.style.display = 'none';
+                paymentMethodChoiceSection.style.display = 'block';
+
+                // Reset selected payment method and disable final button
+                selectedPaymentMethod = null;
+                paymentMethodIcons.forEach(icon => icon.classList.remove('selected'));
+                finalProceedButton.disabled = true;
+            });
+
+            // Handle payment method icon click
+            paymentMethodIcons.forEach(icon => {
+                icon.addEventListener('click', () => {
+                    // Remove 'selected' class from all icons
+                    paymentMethodIcons.forEach(i => i.classList.remove('selected'));
+                    // Add 'selected' class to the clicked icon
+                    icon.classList.add('selected');
+                    selectedPaymentMethod = icon.dataset.method; // Store the method (e.g., 'card', 'upi')
+                    finalProceedButton.disabled = false; // Enable the final proceed button
+                    console.log('Payment method selected:', selectedPaymentMethod);
+                });
+            });
+
+            // Final Proceed Button (Initiates payment with Razorpay via backend)
+            finalProceedButton.addEventListener('click', async () => {
+                if (!selectedPaymentMethod) {
+                    showMessage('Please select a payment method.', 'error');
+                    return;
+                }
+
+                finalProceedButton.disabled = true; // Disable button to prevent multiple clicks
+                finalProceedButton.textContent = 'Processing...'; // Show loading text
+                showMessage('Creating your order. Please wait...', 'info');
+
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const comment = document.getElementById('comment').value;
+                const amount = parseFloat(currentDonationAmount.toFixed(2)); // Ensure amount is a number
+
+                // 1. Send donation data to your backend to create a Razorpay Order
+                try {
+                    const response = await fetch('http://localhost:5000/api/create-order', { // IMPORTANT: In production, replace 'http://localhost:5000' with your actual backend URL
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            amount: amount,
+                            name: name,
+                            email: email,
+                            comment: comment,
+                        }),
+                    });
+
+                    const data = await response.json();
+
+                    if (!response.ok) {
+                        throw new Error(data.message || 'Failed to create order on backend.');
+                    }
+
+                    console.log('Order created on backend:', data);
+                    razorpayKeyId = data.key_id; // Store Key ID from backend
+
+                    // 2. Open Razorpay Checkout modal using the order details from the backend
+                    const options = {
+                        key: razorpayKeyId, // Your Razorpay Key ID (from backend response)
+                        amount: data.amount, // Amount in paisa (from backend response)
+                        currency: data.currency, // Currency (from backend response)
+                        name: "Aram Sei Thozha Trust Donations", // Your organization's name
+                        description: "Support for Aram Sei Thozha's initiatives",
+                        order_id: data.orderId, // Order ID from backend
+                        handler: async function (response) {
+                            // This function is called when the payment is successful
+                            console.log('Razorpay Payment Response:', response);
+                            showMessage('Payment successful! Verifying...', 'info');
+
+                            // IMPORTANT: Send this 'response' object to your backend for verification.
+                            try {
+                                const verificationResponse = await fetch('http://localhost:5000/api/payment-verify', { // IMPORTANT: Replace with your actual backend URL in production
+                                    method: 'POST',
+                                    headers: { 'Content-Type': 'application/json' },
+                                    body: JSON.stringify(response) // Send the full Razorpay response
+                                });
+
+                                const verificationData = await verificationResponse.json();
+
+                                if (!verificationResponse.ok) {
+                                    throw new Error(verificationData.message || 'Payment verification error.');
+                                }
+
+                                if (verificationData.verified) {
+                                    console.log('Payment successfully verified on backend!');
+                                    showMessage('Payment successfully verified! Thank you for your support!', 'success');
+                                    // Redirect to a success page or show a success message
+                                    // window.location.href = 'thank-you.html'; // Optional redirect
+                                } else {
+                                    console.error('Payment verification failed on backend!');
+                                    showMessage('Payment verification failed. Please contact support.', 'error');
+                                }
+                            } catch (verificationError) {
+                                console.error('Error during payment verification:', verificationError);
+                                showMessage('An error occurred during payment verification. Please contact support.', 'error');
+                            } finally {
+                                // Reset form and UI after successful payment (or after backend verification)
+                                resetDonationForm();
+                            }
+                        },
+                        prefill: {
+                            name: name,
+                            email: email,
+                            contact: '' // Optional: Add user's phone number if you collect it
+                        },
+                        notes: {
+                            comment: comment
+                        },
+                        theme: {
+                            color: '#007bff' // Customize Razorpay modal theme color
+                        }
+                    };
+
+                    const rzp1 = new Razorpay(options);
+                    rzp1.on('payment.failed', function (response){
+                        // This function is called when payment fails or is cancelled
+                        console.error('Razorpay Payment Failed:', response.error);
+                        showMessage('Payment failed: ' + response.error.description, 'error');
+                        // You might want to log this failure to your backend
+                        resetDonationForm(); // Reset UI even on failure
+                    });
+                    rzp1.open(); // Opens the Razorpay payment modal
+
+                } catch (error) {
+                    console.error('Error during donation process:', error);
+                    // "Failed to fetch" error indicates the server might not be running.
+                    if (error.message.includes('Failed to fetch')) {
+                        showMessage('Backend server is not reachable. Please ensure the server is running (node server.js).', 'error');
+                    } else {
+                        showMessage('Error processing your donation: ' + error.message, 'error');
+                    }
+                } finally {
+                    finalProceedButton.disabled = false; // Re-enable button
+                    finalProceedButton.textContent = 'Proceed to Payment'; // Reset button text
+                }
+            });
+
+            // Back button to return to donation details
+            backToDetailsButton.addEventListener('click', () => {
+                paymentMethodChoiceSection.style.display = 'none';
+                donationDetailsSection.style.display = 'block';
+                // Keep form data intact for user
+            });
+
+            // Function to reset the entire donation form and UI state
+            function resetDonationForm() {
+                donationForm.reset();
+                amountInput.value = '100'; // Reset to default
+                donationTypeSelection.style.display = 'grid';
+                donationDetailsSection.style.display = 'none';
+                paymentMethodChoiceSection.style.display = 'none';
+                impactMessage.textContent = '';
+                amountBtns.forEach(b => b.classList.remove('active'));
+                document.querySelector('.amount-btn[data-amount="100"]').classList.add('active'); // Re-activate default
+                paymentMethodIcons.forEach(icon => icon.classList.remove('selected'));
+                finalProceedButton.disabled = true;
+                finalProceedButton.textContent = 'Proceed to Payment';
+                selectedPaymentMethod = null;
+                currentDonationAmount = 100; // Reset amount
+                updateDonationDetails(); // Update impact for default state
+            }
+        });
+    </script>
+</body>
+</html>

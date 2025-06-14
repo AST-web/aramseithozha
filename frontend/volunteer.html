@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aram Sei Thozha Trust</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="AST Logo.png" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Nunito:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* General Styles */
+        :root {
+            --primary-color: #007bff; /* Blue */
+            --secondary-color: #6c757d; /* Gray */
+            --accent-color: #28a745; /* Green */
+            --light-bg: #f8f9fa;
+            --dark-text: #343a40;
+            --light-text: #ffffff;
+            --border-color: #dee2e6;
+            --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --transition-speed: 0.3s;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            color: var(--dark-text);
+            background-color: var(--light-bg);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--primary-color);
+            transition: color var(--transition-speed) ease;
+        }
+
+        a:hover {
+            color: #0056b3;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-weight: 600;
+            text-align: center;
+            transition: all var(--transition-speed) ease;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary-hero {
+            background-color: var(--accent-color);
+            color: var(--light-text);
+            box-shadow: var(--box-shadow);
+        }
+
+        .btn-primary-hero:hover {
+            background-color: #218838;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+            padding: 10px 20px;
+            border-radius: 5px;
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--primary-color);
+            color: var(--light-text);
+        }
+
+        .btn-donate-nav {
+            background-color: var(--primary-color);
+            color: var(--light-text);
+            padding: 8px 18px;
+            border-radius: 5px;
+            margin-left: 20px;
+        }
+
+        .btn-donate-nav:hover {
+            background-color: #0056b3;
+            transform: translateY(-1px);
+        }
+
+        .btn-cta {
+            background-color: var(--primary-color);
+            color: var(--light-text);
+            padding: 15px 30px;
+            font-size: 1.1em;
+            width: 100%;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        .btn-cta:hover {
+            background-color: #0056b3;
+            box-shadow: 0 6px 15px rgba(0, 123, 255, 0.3);
+        }
+
+        /* Header */
+        .site-header {
+            background-color: var(--light-text);
+            box-shadow: var(--box-shadow);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 50px; /* Adjust as needed */
+        }
+
+        .main-nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .main-nav ul li {
+            position: relative;
+            margin-left: 30px;
+        }
+
+        .main-nav ul li a {
+            color: var(--dark-text);
+            font-weight: 600;
+            padding: 5px 0;
+            display: block;
+        }
+
+        .main-nav ul li a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Dropdown Navigation */
+        .dropdown-nav {
+            position: relative;
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            background-color: var(--light-text);
+            box-shadow: var(--box-shadow);
+            min-width: 200px;
+            z-index: 10;
+            border-radius: 5px;
+            padding: 10px 0;
+            top: 100%; /* Position below the parent link */
+            left: 0;
+            list-style: none;
+            margin: 0;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: opacity var(--transition-speed) ease, transform var(--transition-speed) ease, visibility var(--transition-speed);
+        }
+
+        .dropdown-nav:hover .dropdown-menu {
+            display: block;
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-menu li a {
+            padding: 10px 20px;
+            color: var(--dark-text);
+            white-space: nowrap;
+        }
+
+        .dropdown-menu li a:hover {
+            background-color: var(--light-bg);
+            color: var(--primary-color);
+        }
+
+        .dropdown-arrow {
+            margin-left: 5px;
+            font-size: 0.8em;
+        }
+
+        /* Hamburger Menu (for mobile) */
+        .hamburger-menu {
+            display: none; /* Hidden by default on desktop */
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 10px;
+            z-index: 1001;
+        }
+
+        .hamburger-menu span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: var(--dark-text);
+            margin: 5px 0;
+            transition: all 0.3s ease;
+        }
+
+        /* Hero Section */
+        .hero-volunteer {
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('images/volunteer-hero.jpg') no-repeat center center/cover; /* Make sure you have a volunteer-hero.jpg in images folder */
+            color: var(--light-text);
+            text-align: center;
+            padding: 100px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 400px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-volunteer h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 3em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero-volunteer p {
+            font-size: 1.2em;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+
+        /* Section Styling */
+        .section-padded {
+            padding: 80px 0;
+            background-color: var(--light-text);
+        }
+
+        .section-padded:nth-of-type(even) {
+            background-color: var(--light-bg);
+        }
+
+        .section-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.5em;
+            text-align: center;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+
+        .lead-text {
+            font-size: 1.15em;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 50px;
+            color: #555;
+        }
+
+        /* Volunteer Value Proposition */
+        .volunteer-value-prop {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .value-card {
+            background-color: var(--light-bg);
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: var(--box-shadow);
+            transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+        }
+
+        .value-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .value-card .icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+            color: var(--accent-color);
+        }
+
+        .value-card h3 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.5em;
+            margin-bottom: 10px;
+            color: var(--dark-text);
+        }
+
+        .value-card p {
+            font-size: 0.95em;
+            color: #666;
+        }
+
+        /* Volunteer Roles Section */
+        .roles-section {
+            padding: 80px 0;
+            background-color: var(--light-bg);
+        }
+
+        .roles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .role-card {
+            background-color: var(--light-text);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: var(--box-shadow);
+            transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .role-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .role-card h4 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.6em;
+            color: var(--primary-color);
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+
+        .role-card p {
+            margin-bottom: 15px;
+            flex-grow: 1; /* Allows paragraphs to take available space */
+        }
+
+        .role-card ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            font-size: 0.9em;
+            color: #555;
+        }
+
+        .role-card ul li {
+            margin-bottom: 8px;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .role-card ul li::before {
+            content: '✓';
+            color: var(--accent-color);
+            position: absolute;
+            left: 0;
+            font-weight: 700;
+        }
+
+        .call-to-action {
+            text-align: center;
+            margin-top: 60px;
+            padding: 40px;
+            background-color: var(--primary-color);
+            color: var(--light-text);
+            border-radius: 10px;
+            box-shadow: var(--box-shadow);
+        }
+
+        .call-to-action .lead-text {
+            color: var(--light-text);
+            margin-bottom: 25px;
+        }
+
+        .call-to-action .btn-secondary {
+            background-color: var(--light-text);
+            color: var(--primary-color);
+            border-color: var(--light-text);
+            padding: 12px 30px;
+        }
+
+        .call-to-action .btn-secondary:hover {
+            background-color: var(--light-bg);
+            color: var(--primary-color);
+            border-color: var(--light-bg);
+        }
+
+        /* Volunteer Form Section */
+        .volunteer-form-container {
+            background-color: var(--light-text);
+            border-radius: 10px;
+            box-shadow: var(--box-shadow);
+            padding: 40px;
+            max-width: 700px;
+            margin: 0 auto;
+            border: 1px solid var(--border-color);
+        }
+
+        .volunteer-form-container h2 {
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark-text);
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group input[type="tel"],
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            font-family: 'Nunito', sans-serif;
+            font-size: 1em;
+            box-sizing: border-box; /* Ensures padding doesn't increase width */
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .form-group input[type="checkbox"] {
+            margin-right: 10px;
+        }
+
+        .form-group div[style*="display: flex"] label {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0; /* Override default label margin */
+            font-weight: 400; /* Less bold for checkboxes */
+            cursor: pointer;
+        }
+
+        .form-privacy-note {
+            font-size: 0.9em;
+            color: #777;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        /* Footer */
+        .site-footer-modern {
+            background-color: var(--dark-text);
+            color: var(--light-text);
+            padding: 50px 0 20px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .footer-col h3 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.4em;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+
+        .footer-col ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-col ul li a,
+        .footer-col p {
+            color: #ccc;
+            transition: color var(--transition-speed) ease;
+        }
+
+        .footer-col ul li a:hover,
+        .footer-col p a:hover {
+            color: var(--light-text);
+        }
+
+        .footer-col .logo img {
+            height: 60px; /* Adjust footer logo size */
+            margin-top: 15px;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .social-icons img {
+            height: 30px; /* Social icon size */
+            width: 30px;
+            border-radius: 50%;
+            transition: transform var(--transition-speed) ease;
+        }
+
+        .social-icons img:hover {
+            transform: translateY(-3px);
+        }
+
+        .icon-email, .icon-phone {
+            margin-right: 8px;
+            font-size: 1.1em;
+            /* You'd typically use font-awesome or similar for actual icons */
+            /* For now, text representation */
+        }
+        .icon-email::before { content: '✉'; }
+        .icon-phone::before { content: '📞'; }
+
+
+        .footer-bottom-bar {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 20px;
+            text-align: center;
+            font-size: 0.9em;
+            color: #aaa;
+        }
+
+
+        /* Media Queries for Responsiveness */
+        @media (max-width: 992px) {
+            .main-nav ul {
+                display: none; /* Hide desktop nav */
+                flex-direction: column;
+                position: absolute;
+                top: 75px; /* Below header */
+                left: 0;
+                width: 100%;
+                background-color: var(--light-text);
+                box-shadow: var(--box-shadow);
+                padding: 20px 0;
+                border-top: 1px solid var(--border-color);
+                z-index: 999;
+            }
+
+            .main-nav ul.active {
+                display: flex; /* Show when active */
+            }
+
+            .main-nav ul li {
+                margin: 10px 0;
+                text-align: center;
+                width: 100%;
+            }
+
+            .main-nav ul li a {
+                padding: 10px 20px;
+                width: 100%;
+            }
+
+            .hamburger-menu {
+                display: block; /* Show hamburger */
+            }
+
+            .dropdown-menu {
+                position: static; /* Allows dropdown to flow naturally in mobile menu */
+                width: 100%;
+                box-shadow: none;
+                background-color: var(--light-bg);
+                padding: 0;
+                border-radius: 0;
+                opacity: 1; /* Always visible when parent is active */
+                visibility: visible;
+                transform: translateY(0);
+            }
+
+            .dropdown-menu li a {
+                padding-left: 40px; /* Indent dropdown items */
+            }
+
+            .btn-donate-nav {
+                margin-left: 0;
+                margin-top: 10px;
+                width: calc(100% - 40px); /* Adjust for padding */
+            }
+
+            .hero-volunteer h1 {
+                font-size: 2.5em;
+            }
+
+            .section-title {
+                font-size: 2em;
+            }
+
+            .volunteer-value-prop,
+            .roles-grid {
+                grid-template-columns: 1fr; /* Stack columns on smaller screens */
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-volunteer {
+                padding: 80px 15px;
+            }
+
+            .hero-volunteer h1 {
+                font-size: 2em;
+            }
+
+            .lead-text {
+                font-size: 1em;
+            }
+
+            .section-padded, .roles-section {
+                padding: 60px 0;
+            }
+
+            .volunteer-form-container {
+                padding: 30px;
+            }
+
+            .form-group div[style*="display: flex"] {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo img {
+                height: 40px;
+            }
+
+            .hero-volunteer h1 {
+                font-size: 1.8em;
+            }
+
+            .btn {
+                padding: 10px 20px;
+                font-size: 0.9em;
+            }
+
+            .section-title {
+                font-size: 1.8em;
+            }
+
+            .value-card, .role-card, .call-to-action, .volunteer-form-container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container header-content">
+            <div class="logo">
+                <a href="index.html"><img src="images/AST.png" alt="AST Logo"></a>
+            </div>
+
+            <nav class="main-nav">
+                <button class="hamburger-menu" aria-label="Toggle navigation">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="education-campaigns.html">Education Campaigns</a></li>
+                    <li class="dropdown-nav">
+                        <a href="#">Projects <span class="dropdown-arrow">▼</span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="projects/welfare-activity.html">Welfare Activity</a></li>
+                            <li><a href="projects/tuition-centers.html">Tuition Centers</a></li>
+                            <li><a href="projects/medical-campaigns.html">Medical Campaigns</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="village-empowerment.html">Village Empowerment</a></li>
+                    <li class="dropdown-nav">
+                        <a href="#">More <span class="dropdown-arrow">▼</span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="about.html">About</a></li>
+                            <li><a href="contact.html">Contact</a></li>
+                            <li><a href="volunteer.html">Volunteer</a></li>
+                            <li><a href="success-stories.html">Success Stories</a></li>
+                        </ul>
+                    </li>
+                    <li><a class="btn btn-donate-nav" href="donate.html">Donate Now</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero-volunteer">
+            <div class="container">
+                <h1>Be the Change You Wish to See</h1>
+                <p>Join the Aram Sei Thozha's family and dedicate your time and skills to make a real, lasting impact in communities where it's needed most. Your passion can empower lives.</p>
+                <a href="#volunteer-form" class="btn btn-primary-hero">Apply to Volunteer Today</a>
+            </div>
+        </section>
+
+        <section class="section-padded">
+            <div class="container text-center">
+                <h2 class="section-title">Why Volunteer with Aram Sei Thozha?</h2>
+                <p class="lead-text">Volunteering is more than just giving time; it's about growing, connecting, and creating a brighter future.</p>
+                <div class="volunteer-value-prop">
+                    <div class="value-card">
+                        <span class="icon">&#128170;</span> <h3>Make a Tangible Impact</h3>
+                        <p>See your efforts directly translate into improved lives, stronger communities, and sustainable change.</p>
+                    </div>
+                    <div class="value-card">
+                        <span class="icon">&#128100;</span> <h3>Grow & Connect</h3>
+                        <p>Develop new skills, gain unique experiences, and meet like-minded individuals passionate about social good.</p>
+                    </div>
+                    <div class="value-card">
+                        <span class="icon">&#127752;</span> <h3>Find Your Purpose</h3>
+                        <p>Align your values with action. Contribute to causes that resonate deeply with you and help build a better world.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="roles-section">
+            <div class="container">
+                <h2 class="section-title">Our Volunteer Opportunities</h2>
+                <p class="lead-text">We have a variety of roles that cater to different skills and time commitments. Find what best suits you!</p>
+                <div class="roles-grid">
+                    <div class="role-card">
+                        <h4>Education Support Volunteer</h4>
+                        <p>Assist in our tuition centers, help with lesson planning, or tutor students in various subjects.</p>
+                        <ul>
+                            <li>Experience with children or teaching is a plus.</li>
+                            <li>Minimum commitment: 4 hours/week.</li>
+                            <li>Location: Chennai-based tuition centers.</li>
+                        </ul>
+                    </div>
+                    <div class="role-card">
+                        <h4>Community Health Assistant</h4>
+                        <p>Help organize medical camps, assist medical professionals, or raise health awareness in villages.</p>
+                        <ul>
+                            <li>Interest in public health or basic medical knowledge.</li>
+                            <li>Flexible commitment based on camp schedules.</li>
+                            <li>Location: Various project villages.</li>
+                        </ul>
+                    </div>
+                    <div class="role-card">
+                        <h4>Fundraising & Outreach Coordinator</h4>
+                        <p>Support our fundraising initiatives, help manage social media, or engage with potential donors.</p>
+                        <ul>
+                            <li>Strong communication and organizational skills.</li>
+                            <li>Remote or in-office flexibility.</li>
+                            <li>Minimum commitment: 5 hours/week.</li>
+                        </ul>
+                    </div>
+                    <div class="role-card">
+                        <h4>Village Development Facilitator</h4>
+                        <p>Work directly with communities on empowerment projects, such as water management or sustainable agriculture.</p>
+                        <ul>
+                            <li>Adaptability and cross-cultural communication skills.</li>
+                            <li>Requires field visits and potentially longer commitments.</li>
+                            <li>Location: Designated village project sites.</li>
+                        </ul>
+                    </div>
+                    <div class="role-card">
+                        <h4>Administrative Support</h4>
+                        <p>Assist with general office tasks, data entry, report preparation, or managing volunteer records.</p>
+                        <ul>
+                            <li>Good organizational and computer skills.</li>
+                            <li>Flexible hours, mostly remote or office-based.</li>
+                            <li>Minimum commitment: 3 hours/week.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="call-to-action">
+                    <p class="lead-text">Don't see a perfect fit? Tell us about your skills!</p>
+                    <a href="#volunteer-form" class="btn btn-secondary">Tell Us About Your Skills</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="volunteer-form" class="section-padded">
+            <div class="container">
+                <div class="volunteer-form-container">
+                    <h2>Volunteer Application Form</h2>
+                    <p class="text-center lead-text" style="margin-bottom: 30px;">Ready to contribute? Please fill out the form below and we'll get in touch!</p>
+                    <form action="#" method="POST" id="volunteer-application-form">
+                        <div class="form-group">
+                            <label for="fullName">Full Name:</label>
+                            <input type="text" id="fullName" name="fullName" placeholder="Your Full Name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address:</label>
+                            <input type="email" id="email" name="email" placeholder="your.email@example.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number:</label>
+                            <input type="tel" id="phone" name="phone" placeholder="Mobile Number" pattern="[0-9]{10,15}" title="Please enter a valid phone number (10-15 digits)">
+                        </div>
+                        <div class="form-group">
+                            <label for="location">Your Location (City, State):</label>
+                            <select id="location" name="location">
+                                <option value="">Please Select District</option>
+                                <option value="ARIYALUR">ARIYALUR</option>
+                                <option value="CHENGALPATTU">CHENGALPATTU</option>
+                                <option value="CHENNAI">CHENNAI</option>
+                                <option value="COIMBATORE">COIMBATORE</option>
+                                <option value="CUDDALORE">CUDDALORE</option>
+                                <option value="DHARMAPURI">DHARMAPURI</option>
+                                <option value="DINDIGUL">DINDIGUL</option>
+                                <option value="ERODE">ERODE</option>
+                                <option value="KALLAKURICHI">KALLAKURICHI</option>
+                                <option value="KANCHIPURAM">KANCHIPURAM</option>
+                                <option value="KARUR">KARUR</option>
+                                <option value="KRISHNAGIR">KRISHNAGIR</option>
+                                <option value="MADURAI">MADURAI</option>
+                                <option value="MAYILADUTHURAI">MAYILADUTHURAI</option>
+                                <option value="NAGAPATTINAM">NAGAPATTINAM</option>
+                                <option value="KANYAKUMARI">KANYAKUMARI</option>
+                                <option value="NAMAKKAL">NAMAKKAL</option>
+                                <option value="PERAMBALUR">PERAMBALUR</option>
+                                <option value="PUDUKKOTTAI">PUDUKKOTTAI</option>
+                                <option value="RAMANATHAPURAM">RAMANATHAPURAM</option>
+                                <option value="RANIPET">RANIPET</option>
+                                <option value="SALEM">SALEM</option>
+                                <option value="SIVAGANGAI">SIVAGANGAI</option>
+                                <option value="TENKASI">TENKASI</option>
+                                <option value="THANJAVUR">THANJAVUR</option>
+                                <option value="THENI">THENI</option>
+                                <option value="THIRUVALLUR">THIRUVALLUR</option>
+                                <option value="THIRUVARUR">THIRUVARUR</option>
+                                <option value="TUTICORIN">TUTICORIN</option>
+                                <option value="TRICHIRAPPALLI">TRICHIRAPPALLI</option>
+                                <option value="THIRUNELVELI">THIRUNELVELI</option>
+                                <option value="TIRUPATTUR">TIRUPATTUR</option>
+                                <option value="TIRUPPUR">TIRUPPUR</option>
+                                <option value="THIRUVANNAMALAI">THIRUVANNAMALAI</option>
+                                <option value="THE NILGIRIS">THE NILGIRIS</option>
+                                <option value="VELLORE">VELLORE</option>
+                                <option value="VILUPPURAM">VILUPPURAM</option>
+                                <option value="VIRUDHUNAGAR">VIRUDHUNAGAR</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="availability">Preferred Availability:</label>
+                            <select id="availability" name="availability" required>
+                                <option value="">Select an option</option>
+                                <option value="weekday-mornings">Weekday Mornings</option>
+                                <option value="weekday-afternoons">Weekday Afternoons</option>
+                                <option value="weekday-evenings">Weekday Evenings</option>
+                                <option value="weekends">Weekends</option>
+                                <option value="flexible">Flexible</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="interest">Area(s) of Interest (select all that apply):</label>
+                            <div class="checkbox-group">
+                                <label><input type="checkbox" name="interest" value="education"> Education Support</label>
+                                <label><input type="checkbox" name="interest" value="health"> Health Campaigns</label>
+                                <label><input type="checkbox" name="interest" value="fundraising"> Fundraising/Outreach</label>
+                                <label><input type="checkbox" name="interest" value="community-dev"> Community Development</label>
+                                <label><input type="checkbox" name="interest" value="admin"> Administrative Support</label>
+                                <label><input type="checkbox" name="interest" value="other"> Other (please specify in skills)</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="skills">Skills & Experience:</label>
+                            <textarea id="skills" name="skills" placeholder="Tell us about your relevant skills, experience, or anything else you'd like us to know."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="howHeard">How did you hear about us?</label>
+                            <input type="text" id="howHeard" name="howHeard" placeholder="e.g., Social media, friend, online search">
+                        </div>
+
+                        <button type="submit" class="btn btn-cta">Submit Your Application</button>
+                        <p class="form-privacy-note">Your information will be kept confidential and used solely for volunteer matching purposes. We respect your privacy.</p>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer-modern">
+        <div class="container footer-grid">
+            <div class="footer-col about-col">
+                <h3>Aram Sei Thozha Trust</h3>
+                <div class="logo">
+                <a href="index.html"><img src="images/AST.png" alt="AST Logo"></a>
+            </div>
+            </div>
+            <div class="footer-col">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="donate.html">Donate</a></li>
+                    <li><a href="education-campaigns.html">Programs</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Get in Touch</h3>
+                <p><i class="icon-email"></i> Email: <a href="mailto:aramseithozha28@gmail.com">aramseithozha28@gmail.com</a></p>
+                <p><i class="icon-phone"></i> Phone: <a href="tel:+918760329821">+91 8760329821</a></p>
+            </div>
+            <div class="footer-col social-col">
+                <h3>Connect With Us</h3>
+                <div class="social-icons">
+                    <a href="https://www.facebook.com/aramseithozhatrust" target="_blank" aria-label="Facebook"><img src="images/fb.png" alt="Facebook"></a>
+                    <a href="#" target="_blank" aria-label="Twitter"><img src="images/x.png" alt="Twitter"></a>
+                    <a href="https://www.instagram.com/aramseithozhatrust" target="_blank" aria-label="Instagram"><img src="images/insta.jpeg" alt="Instagram"></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom-bar">
+            <div class="container">
+                <p>&copy; 2025 All Rights Reserved | Aram Sei Thozha Trust | Terms of Use | Privacy Policy</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Toggle mobile navigation
+        const hamburgerMenu = document.querySelector('.hamburger-menu');
+        const navLinks = document.querySelector('.nav-links');
+
+        hamburgerMenu.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            hamburgerMenu.classList.toggle('open'); // Optional: for animating hamburger icon
+        });
+
+        // Close mobile menu when a link is clicked
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (navLinks.classList.contains('active')) {
+                    navLinks.classList.remove('active');
+                    hamburgerMenu.classList.remove('open');
+                }
+            });
+        });
+
+        // Form submission handling for the volunteer form (mock)
+        document.getElementById('volunteer-application-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            const form = event.target;
+            const formData = new FormData(form);
+            const data = {};
+
+            // Collect all form data, handling checkboxes specifically
+            for (let [key, value] of formData.entries()) {
+                if (key === 'interest') {
+                    if (!data[key]) {
+                        data[key] = [];
+                    }
+                    data[key].push(value);
+                } else {
+                    data[key] = value;
+                }
+            }
+
+            console.log('Volunteer Application Submitted:', data);
+
+            // --- IMPORTANT FOR REAL IMPLEMENTATION ---
+            // In a real scenario, you would send this 'data' to your backend server
+            // using fetch() or XMLHttpRequest.
+            /*
+            fetch('/api/volunteer-applications', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(result => {
+                if (result.success) {
+                    alert('Thank you for your application! We will review it and get in touch soon.');
+                    form.reset(); // Clear the form
+                } else {
+                    alert('There was an error submitting your application. Please try again.');
+                }
+            })
+            .catch(error => {
+                console.error('Error submitting volunteer application:', error);
+                alert('An unexpected error occurred. Please try again later.');
+            });
+            */
+
+            alert('Thank you for your simulated volunteer application! We will review it and get in touch soon.');
+            form.reset(); // Clear the form after mock submission
+        });
+    </script>
+</body>
+</html>
