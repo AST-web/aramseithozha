@@ -466,7 +466,7 @@
 
             let currentDonationAmount = 100; // Default amount
             let selectedPaymentMethod = null; // Store selected method (conceptually)
-            let razorpayKeyId = ''; // To store Razorpay Key ID from backend
+            let razorpayKeyId = 'https://aramseithozha.onrender.com'; // To store Razorpay Key ID from backend
 
             // Function to update the impact message
             function updateDonationDetails() {
@@ -574,7 +574,7 @@
 
                 // 1. Send donation data to your backend to create a Razorpay Order
                 try {
-                    const response = await fetch('http://localhost:5000/api/create-order', { // IMPORTANT: In production, replace 'http://localhost:5000' with your actual backend URL
+                    const response = await fetch(`${backendBaseUrl}/api/create-order`, { // IMPORTANT: In production, replace 'http://localhost:5000' with your actual backend URL
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -611,7 +611,7 @@
 
                             // IMPORTANT: Send this 'response' object to your backend for verification.
                             try {
-                                const verificationResponse = await fetch('http://localhost:5000/api/payment-verify', { // IMPORTANT: Replace with your actual backend URL in production
+                                const verificationResponse = await fetch(`${backendBaseUrl}/api/payment-verify`, { // IMPORTANT: Replace with your actual backend URL in production
                                     method: 'POST',
                                     headers: { 'Content-Type': 'application/json' },
                                     body: JSON.stringify(response) // Send the full Razorpay response
