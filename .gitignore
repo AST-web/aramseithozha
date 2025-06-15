@@ -1,0 +1,8 @@
+# Dependencies
+node_modules/
+.env
+
+# Optionally, if you have other temporary files you don't want to commit
+# .DS_Store
+# Thumbs.db
+# *.log
