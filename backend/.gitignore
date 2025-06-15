@@ -1,0 +1,21 @@
+# This is a comment. Anything after the # symbol will be ignored by Git.
+
+# Ignore the .env file
+.env
+
+# Ignore the node_modules folder (should generally be done for all Node.js projects)
+node_modules/
+
+# Ignore log files
+*.log
+
+# Ignore build folders (your project's compiled outputs)
+build/
+dist/
+
+# Ignore a specific file
+mysecretfile.txt
+
+# Ignore specific file types
+*.zip
+*.rar
